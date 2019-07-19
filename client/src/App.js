@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { createMuiTheme } from "@material-ui/core/styles";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#e8f5f5",
+      main: "#69c9c9",
+    },
+    secondary: {
+      light: "#dbdbdb",
+      main: "#69c9c9",
+      dark: "#ababab",
+    },
+  },
+});
 
 function App() {
   return (
