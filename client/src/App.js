@@ -3,6 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createMuiTheme } from "@material-ui/core/styles";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import HomePage from "./components/HomePage/HomePage";
+import ErrorPush from "./components/ErrorPush/ErrorPush"
 
 const theme = createMuiTheme({
   palette: {
@@ -18,25 +20,24 @@ const theme = createMuiTheme({
   },
 });
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+        <div>
+          <Router>
+            <div>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route component={ErrorPush} />
+              </Switch>
+            </div>
+          </Router>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 export default App;
