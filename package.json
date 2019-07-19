@@ -1,0 +1,30 @@
+{
+  "name": "zipquip",
+  "version": "1.0.0",
+  "description": "zipquip-app",
+  "main": "sever.js",
+  "dependencies": {
+    "connect": "^3.7.0",
+    "connect-mongo": "^3.0.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "mongoose": "^5.6.5",
+    "passport": "^0.4.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aangl3r/ZipQuip.git"
+  },
+  "author": "Justin Chastain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aangl3r/ZipQuip/issues"
+  },
+  "homepage": "https://github.com/aangl3r/ZipQuip#readme"
+}
