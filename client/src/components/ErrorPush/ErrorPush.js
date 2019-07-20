@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./ErrorPush.css";
 
 class ErrorPush extends Component {
     render() {
