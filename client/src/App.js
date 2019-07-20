@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from '@material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from "./components/Themes/Themes"
 import HomePage from "./components/HomePage/HomePage";
-import ErrorPush from "./components/ErrorPush/ErrorPush"
+import ErrorPush from "./components/ErrorPush/ErrorPush";
 
-const theme = createMuiTheme({
+
+
+
+/* const theme = createMuiTheme({
   palette: {
       primary: {
           light: "#e8f5f5",
@@ -18,13 +22,15 @@ const theme = createMuiTheme({
           dark: "#ababab",
       },
   },
-});
+}); */
 
 class App extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
+      <React.Fragment>
+      <CssBaseline />
+      <MuiThemeProvider theme={theme}>
         <div>
           <Router>
             <div>
@@ -35,7 +41,8 @@ class App extends Component {
             </div>
           </Router>
         </div>
-      </ThemeProvider>
+      </MuiThemeProvider>
+      </React.Fragment>
     );
   }
 }
