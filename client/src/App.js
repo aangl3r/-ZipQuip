@@ -5,6 +5,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from "./components/Themes/Themes"
 import HomePage from "./components/HomePage/HomePage";
+import Profile from "./components/Profile/Profile";
 import ErrorPush from "./components/ErrorPush/ErrorPush";
 
 
@@ -36,6 +37,7 @@ class App extends Component {
             <div>
               <Switch>
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/profile" component={Profile} />
                 <Route component={ErrorPush} />
               </Switch>
             </div>
