@@ -4,11 +4,8 @@
   "description": "zipquip-app",
   "main": "sever.js",
   "dependencies": {
-    "@material-ui/core": "^4.2.1",
-    "@material-ui/styles": "^4.2.1",
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
-    "cheerio": "^1.0.0-rc.3",
     "connect": "^3.7.0",
     "connect-mongo": "^3.0.0",
     "dotenv": "^8.0.0",
@@ -16,19 +13,18 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "if-env": "^1.0.4",
-    "lodash": "^4.17.15",
     "mongoose": "^5.6.5",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
-    "path": "^0.12.7",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1",
-    "typeface-roboto": "0.0.75"
+    "path": "^0.12.7"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "npm run client",
+    "client": "cd client && npm run start"
   },
   "repository": {
     "type": "git",

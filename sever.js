@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 
 //api routes
 require("./routes/authRoutes")(app);
+require("./routes/api-routes.js")(app);
 
 //express-session secret
 const sessionKey = process.env.CookieKey;
@@ -17,7 +18,27 @@ const MongoStore = require("connect-mongo")(session);
 
 //define middleware
 app.use(
-  express.urlencoded({
-    extended: true,
-  })
+    express.urlencoded({
+        extended: true,
+    })
 );
+
+app.use(express.json());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+
+    next();
+});
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+app.listen(PORT, () => {
+    console.log(`🌎 ==> API server now on port ${PORT}!`);
+});
