@@ -70,24 +70,6 @@ const ZipForm = props => {
     )
 }
 
-const styles = theme => ({
-    card: {
-        minWidth: 275,
-        maxWidth: 675,
-    },
-    bullet: {
-        display: "inline-block",
-        margin: "0 2px",
-        transform: "scale(0.8)",
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
-
 class Profile extends Component {
     state = {
         oldName: "",
@@ -159,7 +141,6 @@ class Profile extends Component {
     };
 
     render() {
-        const { classes } = this.props;
         return (
             <React.Fragment>
                 <Nav />
