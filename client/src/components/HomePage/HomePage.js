@@ -16,7 +16,14 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        height: 250,
     },
+    sideBarGrid: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+        height: 800,
+    }
 }));
 
 const HomePage = props => {
@@ -32,8 +39,8 @@ const HomePage = props => {
                             <PostCard>
                             </PostCard>
                         </Grid>
-                        <Grid item xs={4} className="SideBarGrid">
-                            <Paper className={classes.paper}>Sidebar</Paper>
+                        <Grid item xs={4}>
+                            <Paper className={classes.sideBarGrid}>Sidebar</Paper>
                         </Grid>
                         <Grid item xs={4}>
                         <Paper className={classes.paper}>Comment Section</Paper>
