@@ -1,0 +1,8 @@
+.paperStyle {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    max-width: 80%;
+    margin: 200px auto;
+    
+}

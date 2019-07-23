@@ -31,3 +31,9 @@
     transform: rotate(360deg);
   }
 }
+
+.bgImage {
+  background-image: url("./components/LandingPage/assets/images/city.jpg");
+  max-width:100%;
+  max-height:100%;
+}
