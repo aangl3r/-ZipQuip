@@ -7,6 +7,7 @@ import theme from "./components/Themes/Themes"
 import HomePage from "./components/HomePage/HomePage";
 import Profile from "./components/Profile/Profile";
 import ErrorPush from "./components/ErrorPush/ErrorPush";
+import LandingPage from "./components/LandingPage/LandingPage";
 
 
 
@@ -36,7 +37,8 @@ class App extends Component {
           <Router>
             <div>
               <Switch>
-                <Route exact path="/" component={HomePage} />
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/Home" component={HomePage} />
                 <Route exact path="/profile" component={Profile} />
                 <Route component={ErrorPush} />
               </Switch>
