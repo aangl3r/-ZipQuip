@@ -1,19 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-module.export = function (app) {
-
-    //get session data
-    app.get("/api/session", function (req, res) {
-        console.log(req.session);
-        if (!req.session.user) {
-            res.status(401).send("No user is signed in on this session");
-        } else {
-            console.log(`Session cookie is ${req.session.user}`);
-            res.send(JSON.stringify({ data: req.session }));
-        }
-    });
-
+module.exports = app => {
     //checks if user exists. if not, adds to db
     app.post("/api/users", function (req, res) {
         //searches db for email
@@ -24,26 +12,24 @@ module.export = function (app) {
                 //if email doesn't exist in db
                 if (user === null) {
                     //protect pw
-                    const saltRounds = 10;
-                    bcrypt.genSalt(saltRounds, function (err, salt) {
-                        bcrypt.hash(req.body.password, salt, function (err, hash) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                req.body.password = hash;
-                                //create user in db
-                                User.create(req.body, function (err, post) {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        console.log(post);
-                                        req.session.user = post._id;
-                                    }
-                                    res.sendStatus(200);
-                                });
-                            }
-                        });
-                    })
+                    bcrypt.hash(req.body.password, 10, function (err, hash) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            req.body.password = hash;
+                            // Then add to db
+                            User.create(req.body, function (err, post) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    console.log(post);
+                                    req.session.user = post._id;
+                                }
+                                res.sendStatus(200);
+                            });
+                        }
+                    });
+                    // Otherwise escape
                 } else if (user) {
                     res.status(401).send("This email profile already exists.");
                 }
@@ -87,5 +73,86 @@ module.export = function (app) {
                 }
             }
         });
+    });
+    //update user info
+    app.put("/api/users", function (req, res) {
+        const userUpdate = {
+            name: req.body.name,
+            email: req.body.email,
+            zip: req.body.zip,
+        };
+        if (!req.session.user) {
+            res.sendStatus(401);
+            return;
+        } else {
+            if (
+                userUpdate.name === undefined ||
+                userUpdate.email === undefined ||
+                userUpdate.zip === undefined
+            ) {
+                console.log("Empty data!");
+                res.sendStatus(401);
+            }
+            User.update({ _id: req.body.userId }, userUpdate, function (err, user) {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    console.log(user);
+                    res.sendStatus(200);
+                }
+            });
+        }
+    });
+    //update user pw
+    app.put("/api/users/password", function (req, res) {
+        if (!req.session.user) {
+            res.sendStatus(401);
+            return;
+        } else {
+            User.findOne({ _id: req.body.userId }, function (err, user) {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    console.log(user);
+                    bcrypt.compare(req.body.password, user.password, function (
+                        err,
+                        result
+                    ) {
+                        if (err) {
+                            console.log(err);
+                            res.sendStatus(500);
+                        } else if (!result) {
+                            console.log(result);
+                            res.sendStatus(401);
+                        } else if (result) {
+                            let newPassword = "";
+                            bcrypt.hash(req.body.newPassword, 10, function (err, hash) {
+                                if (err) {
+                                    console.log(err);
+                                    res.sendStatus(500);
+                                } else {
+                                    newPassword = hash;
+                                }
+                            });
+                            User.updateOne(
+                                { _id: req.body.userId },
+                                { password: newPassword },
+                                function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                        res.sendStatus(500);
+                                    } else {
+                                        console.log(result);
+                                        res.sendStatus(200);
+                                    }
+                                }
+                            );
+                        }
+                    });
+                }
+            });
+        }
     });
 }

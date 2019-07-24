@@ -6,6 +6,7 @@ const path = require("path");
 const PORT = process.env.PORT || 3000;
 const app = express();
 const mongoose = require("mongoose");
+var bodyParser = require("body-parser");
 
 //require models
 require("./models/User");
@@ -21,6 +22,16 @@ require("./routes/api-routes")(app);
 const sessionKey = process.env.CookieKey;
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const hour = 36000000;
+app.use(
+    session({
+        secret: sessionKey,
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
+        cookie: { maxAge: hour, sameSite: true },
+        resave: true,
+        saveUninitialized: true
+    })
+);
 
 //define middleware
 app.use(
@@ -28,6 +39,11 @@ app.use(
         extended: true,
     })
 );
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -44,21 +60,20 @@ app.use(function (req, res, next) {
 //connect to mongodb
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/zipquip";
 
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+}
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
-  console.log("Connected to db!");
+db.once("open", function () {
+    console.log("Connected to db!");
 });
 
-//const hour = 36000000;
-app.use(
-  session({
-    secret: sessionKey,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    //cookie: { maxAge: hour, sameSite: true },
-  })
-);
+
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
