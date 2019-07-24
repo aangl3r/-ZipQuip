@@ -3,6 +3,7 @@ import "./LandingPage.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from "@material-ui/core/Paper";
 import Button from '@material-ui/core/Button';
+import SignIn from "./SignIn"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,10 +23,22 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+
 const AuthPrompt = props => {
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
+
         <div className="paperStyle">
             <Paper className={classes.paper}>
                 <h1>Connect, Discuss, Plan</h1>
@@ -33,18 +46,23 @@ const AuthPrompt = props => {
                     Sign Up
                 </Button>
                 <p>
-                    Already have an account?  
-                <Button href="#text-buttons" className={classes.button}>
-                    Sign In
-                </Button>
+                    Already have an account?
+                    <Button onClick={handleOpen}>
+                        Sign In
+                    </Button>
                 </p>
-                    <input
+                <SignIn
+                    open={open}
+                    //email={this.state.email}
+                    onClose={handleClose}
+                />
+                <input
                     accept="image/*"
                     className={classes.input}
                     id="text-button-file"
                     multiple
                     type="file"
-                    />
+                />
             </Paper>
         </div>
     );
