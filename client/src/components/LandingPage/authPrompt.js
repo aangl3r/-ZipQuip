@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from "@material-ui/core/Paper";
 import Button from '@material-ui/core/Button';
 import SignIn from "./SignIn"
+import SignUp from "./SignUp"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,6 +29,8 @@ const AuthPrompt = props => {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
+    const [signUpOpen, setSignUpOpen] = React.useState(false);
+    const [email, setEmail] = React.useState("");
 
     const handleOpen = () => {
         setOpen(true);
@@ -37,12 +40,24 @@ const AuthPrompt = props => {
         setOpen(false);
     };
 
+    const signUpHandleOpen = () => {
+        setSignUpOpen(true);
+    };
+
+    const signUpHandleClose = () => {
+        setSignUpOpen(false);
+    };
+
+    const saveEmail = data => {
+        setEmail(data);
+    };
+
     return (
 
         <div className="paperStyle">
             <Paper className={classes.paper}>
                 <h1>Connect, Discuss, Plan</h1>
-                <Button variant="contained" color="primary" className={classes.button} align="center">
+                <Button onClick={signUpHandleOpen} variant="contained" color="primary" className={classes.button} align="center">
                     Sign Up
                 </Button>
                 <p>
@@ -53,7 +68,7 @@ const AuthPrompt = props => {
                 </p>
                 <SignIn
                     open={open}
-                    //email={this.state.email}
+                    email={saveEmail}
                     onClose={handleClose}
                 />
                 <input
@@ -62,6 +77,12 @@ const AuthPrompt = props => {
                     id="text-button-file"
                     multiple
                     type="file"
+                />
+                <SignUp
+                    SUOpen={signUpOpen}
+                    setEmail={email}
+                    saveEmail={saveEmail}
+                    SUClose={signUpHandleClose}
                 />
             </Paper>
         </div>

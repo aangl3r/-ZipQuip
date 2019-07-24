@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
 const path = require("path");
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const app = express();
 const mongoose = require("mongoose");
 
@@ -15,7 +15,7 @@ require("./passport/passport");
 
 //api routes
 require("./routes/authRoutes")(app);
-require("./routes/api-routes.js")(app);
+require("./routes/api-routes")(app);
 
 //express-session secret
 const sessionKey = process.env.CookieKey;
