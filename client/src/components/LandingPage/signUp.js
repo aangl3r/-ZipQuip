@@ -75,6 +75,7 @@ class SignUp extends React.Component {
             });
           } else {
             this.props.saveEmail(data.email);
+            this.props.changeSISU();
           }
         })
         .catch(err => {
@@ -97,7 +98,7 @@ class SignUp extends React.Component {
       >
         <div style={getModalStyle()} className={classes.paper}>
           <Typography component="h1" variant="h5" align="center">
-            Create an account
+            Create an account with Neighborly
           </Typography>
           <form className={classes.form} onSubmit={this.saveUser}>
             <FormControl margin="normal" required fullWidth>

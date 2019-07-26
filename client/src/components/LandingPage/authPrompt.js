@@ -1,12 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import "./LandingPage.css";
-import { makeStyles } from '@material-ui/core/styles';
+import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper";
 import Button from '@material-ui/core/Button';
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: "center",
+        color: theme.palette.text.secondary,
+        width: 600,
+    },
+    button: {
+        margin: theme.spacing(2),
+    },
+    input: {
+        display: 'none',
+    },
+})
+
+/* const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
     },
@@ -23,70 +41,119 @@ const useStyles = makeStyles(theme => ({
         display: 'none',
     },
 }));
+ */
 
-
-const AuthPrompt = props => {
-    const classes = useStyles();
-
-    const [open, setOpen] = React.useState(false);
-    const [signUpOpen, setSignUpOpen] = React.useState(false);
-    const [email, setEmail] = React.useState("");
-
-    const handleOpen = () => {
-        setOpen(true);
+class AuthPrompt extends Component {
+    state = {
+        SIopen: false,
+        SUOpen: false,
+        email: "",
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    handleOpen = () => {
+        this.setState({ SIopen: true });
     };
 
-    const signUpHandleOpen = () => {
-        setSignUpOpen(true);
+    handleClose = () => {
+        this.setState({ SIopen: false });
     };
 
-    const signUpHandleClose = () => {
-        setSignUpOpen(false);
+    SUOpen = () => {
+        this.setState({ SUOpen: true });
     };
 
-    const saveEmail = data => {
-        setEmail(data);
+    SUClose = () => {
+        this.setState({ SUOpen: false });
     };
 
-    return (
+    changeSISU = () => {
+        this.setState({
+            SUOpen: false,
+            SIopen: true,
+        });
+    };
 
-        <div className="paperStyle">
-            <Paper className={classes.paper}>
-                <h1>Connect, Discuss, Plan</h1>
-                <Button onClick={signUpHandleOpen} variant="contained" color="primary" className={classes.button} align="center">
-                    Sign Up
-                </Button>
-                <p>
-                    Already have an account?
-                    <Button onClick={handleOpen}>
-                        Sign In
+    saveEmail = data => {
+        this.setState({
+            email: data,
+        });
+    };
+
+    /* 
+    
+        const classes = useStyles();
+    
+        const [open, setOpen] = React.useState(false);
+        const [signUpOpen, setSignUpOpen] = React.useState(false);
+        const [email, setEmail] = React.useState("");
+    
+        const handleOpen = () => {
+            setOpen(true);
+        };
+    
+        const handleClose = () => {
+            setOpen(false);
+        };
+    
+        const signUpHandleOpen = () => {
+            setSignUpOpen(true);
+        };
+    
+        const signUpHandleClose = () => {
+            setSignUpOpen(false);
+        };
+    
+        const saveEmail = data => {
+            setEmail(data);
+        };
+    
+         const changeToSignIn = () => {
+            signUpHandleClose(true),
+            handleOpen(true)
+        };
+     
+    
+         */
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <div className="paperStyle">
+                <Paper className={classes.paper}>
+                    <h1>Connect, Discuss, Plan</h1>
+                    <Button SUOpen={this.SUOpen} variant="contained" color="primary" className={classes.button} align="center" onClick={this.SUOpen}>
+                        Sign Up
                     </Button>
-                </p>
-                <SignIn
-                    open={open}
-                    email={saveEmail}
-                    onClose={handleClose}
-                />
-                <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="text-button-file"
-                    multiple
-                    type="file"
-                />
-                <SignUp
-                    SUOpen={signUpOpen}
-                    setEmail={email}
-                    saveEmail={saveEmail}
-                    SUClose={signUpHandleClose}
-                />
-            </Paper>
-        </div>
-    );
+                    <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                    />
+                    <p>
+                        Already have an account?
+                        <Button onClick={this.handleOpen}>
+                            Sign In
+                        </Button>
+                    </p>
+                    <SignIn
+                        open={this.state.SIopen}
+                        email={this.state.email}
+                        onClose={this.handleClose}
+                    />
+                    <SignUp
+                        SUOpen={this.state.SUOpen}
+                        changeSISU={this.changeSISU}
+                        email={this.state.email}
+                        SUClose={this.SUClose}
+                        saveEmail={this.saveEmail}
+                    />
+                </Paper>
+            </div>
+        );
+    }
+
 };
 
-export default AuthPrompt;
+export default withStyles(styles)(AuthPrompt);
