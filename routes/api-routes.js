@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Post = require("../models/Post");
 const bcrypt = require("bcrypt");
 
 module.exports = app => {
@@ -152,6 +153,55 @@ module.exports = app => {
                         }
                     });
                 }
+            });
+        }
+    });
+    // * Adds new post to db
+    app.post("/api/posts", function (req, res) {
+        // Checks for a session, if none return 401
+        if (!req.session.user) {
+            res.sendStatus(401);
+            return;
+        }
+        // If signed in, create new post with req data
+        Post.create(req.body, function (err, post) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(post);
+                res.sendStatus(200);
+            }
+        });
+    });
+    // * Get session data
+    app.get("/api/session", function (req, res) {
+        console.log(req.session);
+        if (!req.session.user) {
+            res.status(401).send("No user is signed in on this session");
+        } else {
+            console.log(`Session cookie is ${req.session.user}`);
+            res.send(JSON.stringify({ data: req.session }));
+        }
+    });
+    // * Gets the last 10 posts from the db if the user is signed in
+    app.get("/api/posts/:number/:location", function (req, res) {
+        // Checks for session, if none, return 401
+        const n = Number(req.params.number);
+        const l = req.params.location;
+        console.log(l);
+        if (!req.session.user) {
+            res.sendStatus(401);
+            return;
+        } else {
+            // If signed in, return last 10 posts
+            const find = Post.find({ location: l })
+                .sort({ createdAt: -1 })
+                .limit(n);
+            find.exec(function (err, posts) {
+                if (err) {
+                    console.log(err);
+                }
+                res.send(JSON.stringify(posts));
             });
         }
     });

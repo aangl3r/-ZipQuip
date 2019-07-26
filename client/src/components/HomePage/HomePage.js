@@ -1,13 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import "./HomePage.css";
-import ContainerMain from "../Container"
-import Nav from "../Nav"
-import PostCard from "../PostCard"
-import { makeStyles } from '@material-ui/core/styles';
+import ContainerMain from "../Container";
+import Nav from "../Nav";
+import PostCard from "../PostCard";
+import { withStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import PostGen from "../PostCard/PostGen"
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     root: {
         flexGrow: 1,
         marginTop: 30
@@ -24,35 +25,116 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.text.secondary,
         height: 600,
     }
-}));
+});
 
-const HomePage = props => {
-    const classes = useStyles();
+class HomePage extends Component {
+    state = {
+        posts: [],
+        id: "",
+        location: "",
+        name: "",
+        snackBar: false,
+        open: false,
+        recipientName: "",
+        recipientId: "",
+        replyContent: "",
+        replySubject: "",
+    };
 
-    return (
-        <React.Fragment>
-            <Nav />
-            <div className={classes.root}>
-                <ContainerMain>
-                    <Grid container spacing={4}>
-                        <Grid item xs={12}>
-                            <PostCard>
-                            </PostCard>
+    componentDidMount() {
+        fetch("/api/session", {
+            method: "Get", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "client", // no-referrer, *client
+        })
+            .then(res => res.json())
+            .then(
+                result => {
+                    const { user, loc, name } = result.data;
+                    console.log(result);
+                    this.setState({
+                        id: user,
+                        location: loc,
+                        name: name,
+                    });
+                    this.updatePosts();
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+    }
+
+    updatePosts = () => {
+        fetch(`/api/posts/50/${this.state.location}`, {
+            method: "Get", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "client", // no-referrer, *client
+        })
+            .then(res => res.json())
+            .then(
+                result => {
+                    console.log(result);
+                    this.setState({
+                        posts: result,
+                    });
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+    };
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <React.Fragment>
+                <Nav />
+                <div className={classes.root}>
+                    <ContainerMain>
+                        <Grid container spacing={4}>
+                            <Grid item xs={12}>
+                                <PostCard>
+                                </PostCard>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper className={classes.sideBarGrid}>Sidebar</Paper>
+                            </Grid>
+                            <Grid item xs={8}>
+                                <Paper className={classes.paper}>Comment Section
+                                    <div>
+                                        <PostGen
+                                            category="General"
+                                            posts={this.state.posts}
+                                            updatePosts={this.updatePosts}
+                                            updateReply={this.updateReply}
+                                            openModal={this.handleOpen}>
+                                        </PostGen>
+                                    </div>
+                                </Paper>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.sideBarGrid}>Sidebar</Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                        <Paper className={classes.paper}>Comment Section</Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                        <Paper className={classes.paper}>Comment Section</Paper>
-                        </Grid>
-                    </Grid>
-                </ContainerMain>
-            </div>
-        </React.Fragment>
-    );
+                    </ContainerMain>
+                </div>
+            </React.Fragment>
+        );
+    }
+
+
 }
 
-export default HomePage;
+export default withStyles(styles)(HomePage);

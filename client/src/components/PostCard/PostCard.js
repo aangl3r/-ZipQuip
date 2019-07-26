@@ -2,7 +2,7 @@ import React from 'react';
 import "./PostCard.css";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import SubmitForm from "./submitForm";
 
@@ -17,7 +17,7 @@ function getModalStyle() {
     };
 }
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     paper: {
         position: "absolute",
         width: 600,
@@ -29,50 +29,56 @@ const useStyles = makeStyles(theme => ({
     button: {
         margin: theme.spacing(1),
     },
-}));
+});
 
-const PostCard = props => {
-    const classes = useStyles();
-
-    const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(false);
-  
-    const handleOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
+class PostCard extends React.Component {
+    state = {
+        open: false,
     };
 
-    return (
-        <div className="PostCard">
-            <Button onClick={handleOpen} align="justify" color="primary" variant="outlined" >
-                Add Post
-          </Button>
-            <Modal
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                open={open}
-                onClose={handleClose}
-            >
-                <div style={modalStyle} className={classes.paper}>
-                    <Typography align="center" variant="h4">
-                        Post
-                    </Typography>
-                    <SubmitForm
-                    closeModal={handleClose}
-                    //updatePosts={this.props.updatePosts}
-                    //id={this.props.id}
-                    //name={this.props.name}
-                    //location={this.props.location}
-                    />
-                </div>
-            </Modal>
-        </div>
-    )
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <div className="PostCard" >
+                <Button onClick={this.handleOpen} align="justify" color="primary" variant="outlined" >
+                    Add Post
+              </Button>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                >
+                    <div style={getModalStyle()} className={classes.paper}>
+                        <Typography align="center" variant="h4">
+                            Post
+                        </Typography>
+                        <SubmitForm
+                            closeModal={this.handleClose}
+                            updatePosts={this.props.updatePosts}
+                            id={this.props.id}
+                            name={this.props.name}
+                            location={this.props.location}
+                        />
+                    </div>
+                </Modal>
+            </div>
+        )
+    }
+
+
 
 };
 
 
-export default PostCard;
+
+export default withStyles(styles)(PostCard);

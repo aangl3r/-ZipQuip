@@ -10,6 +10,46 @@ import ErrorPush from "./components/ErrorPush/ErrorPush";
 import LandingPage from "./components/LandingPage/LandingPage";
 
 class App extends Component {
+  state = {
+    user: "",
+    location: "",
+    name: "",
+  };
+  componentDidUpdate() {
+    fetch("/api/session", {
+      method: "Get", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, cors, *same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "include", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // "Content-Type": "application/x-www-form-urlencoded",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrer: "client", // no-referrer, *client
+    })
+      .then(res => res.json())
+      .then(
+        result => {
+          const { user, loc, name } = result.data;
+          console.log(result);
+          this.setState({
+            id: user,
+            location: loc,
+            name: name,
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
+  updateAuth = user => {
+    this.setState({
+      user: user,
+    });
+  };
 
   render() {
     return (
