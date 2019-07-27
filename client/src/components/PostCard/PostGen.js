@@ -10,7 +10,7 @@ const styles = {
     card: {
         minWidth: 275,
         width: "100%",
-        backgroundColor: "#81c784",
+        backgroundColor: "#81c5c7",
         borderRadius: "10px",
     },
     bullet: {
@@ -27,7 +27,6 @@ class PostGen extends Component {
     renderCards = () => {
         const posts = this.props.posts;
         return posts
-            .filter(post => post.category === "General")
             .slice(0, 9)
             .map((post, index) => {
                 return (
@@ -50,6 +49,7 @@ class PostGen extends Component {
             <Card className={classes.card} square>
                 <CardContent>
                 </CardContent>
+                {this.renderCards()}
                 <CardActions />
             </Card>
         );

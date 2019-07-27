@@ -17,7 +17,6 @@ const styles = theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-        height: 250,
     },
     sideBarGrid: {
         padding: theme.spacing(2),
@@ -118,7 +117,6 @@ class HomePage extends Component {
                                 <Paper className={classes.paper}>Comment Section
                                     <div>
                                         <PostGen
-                                            category="General"
                                             posts={this.state.posts}
                                             updatePosts={this.updatePosts}
                                             updateReply={this.updateReply}
