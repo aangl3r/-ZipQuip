@@ -48,10 +48,12 @@ class PostCard extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div className="PostCard" >
-                <Button onClick={this.handleOpen} align="justify" color="primary" variant="outlined" >
-                    Add Post
-              </Button>
+            <div>
+                <div className="PostCard" >
+                    <Button onClick={this.handleOpen} fullWidth={true} align="justify" color="primary" variant="outline" >
+                        Add Post
+                    </Button>
+                </div>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"

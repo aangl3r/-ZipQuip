@@ -3,7 +3,8 @@
     border: 2px dashed #c8ccdb;
     border-radius: 3px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    background: #eceef5
+    background: #81c5c7;
+    width: 100%
 }
 
 .PostCard:hover {

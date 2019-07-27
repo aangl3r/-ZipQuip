@@ -15,10 +15,7 @@ const styles = theme => ({
     },
     dense: {
         marginTop: 19,
-    },
-    menu: {
-        width: 200,
-    },
+    }
 });
 
 class SubmitForm extends React.Component {
