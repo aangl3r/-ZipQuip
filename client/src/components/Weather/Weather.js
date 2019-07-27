@@ -64,7 +64,7 @@ class Weather extends Component {
     getWeather = location => {
         axios
             .get(
-                `http://api.openweathermap.org/data/2.5/weather?zip=${this.state.location},us&APPID=a0e8c6ce4e039dfb38fd4b809082c416`
+                `https://api.openweathermap.org/data/2.5/weather?zip=${this.state.location},us&APPID=a0e8c6ce4e039dfb38fd4b809082c416`
             )
             .then(response => {
                 console.log(response);
