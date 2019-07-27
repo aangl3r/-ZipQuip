@@ -73,7 +73,7 @@ class PostComment extends React.Component {
         <CardContent>
           <Typography component="p">{this.props.content}</Typography>
         </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing />
+        <CardActions className={classes.actions} disableSpacing />
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>Body:</Typography>

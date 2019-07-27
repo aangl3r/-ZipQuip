@@ -7,6 +7,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import PostGen from "../PostCard/PostGen"
+import MapContainer from "../MapItem/MapItem2"
+import { Typography } from "@material-ui/core";
+import Weather from "../Weather"
 
 const styles = theme => ({
     root: {
@@ -22,7 +25,9 @@ const styles = theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-        height: 600,
+    },
+    title: {
+    fontSize: 17,
     }
 });
 
@@ -111,7 +116,17 @@ class HomePage extends Component {
                                 </PostCard>
                             </Grid>
                             <Grid item xs={4}>
-                                <Paper className={classes.sideBarGrid}>Sidebar</Paper>
+                                <Paper className={classes.sideBarGrid}>Sidebar
+                                <div>
+                                    <Typography
+                                        className={classes.title}
+                                        color="inherit"
+                                        variant="h3">
+                                        Hello {this.state.name}
+                                    </Typography>
+                                    <Weather />
+                                    </div>
+                                </Paper>
                             </Grid>
                             <Grid item xs={8}>
                                 <Paper className={classes.paper}>Comment Section

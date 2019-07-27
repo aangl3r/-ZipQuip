@@ -50,7 +50,7 @@ class PostCard extends React.Component {
         return (
             <div>
                 <div className="PostCard" >
-                    <Button onClick={this.handleOpen} fullWidth={true} align="justify" color="primary" variant="outline" >
+                    <Button onClick={this.handleOpen} fullWidth={true} align="justify" color="primary" variant="outlined" >
                         Add Post
                     </Button>
                 </div>
