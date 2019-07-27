@@ -35,7 +35,7 @@
     "client": "cd client && npm run start",
     "build": "cd client && npm run build",
     "heroku-prebuild": "cd client && npm install",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm install"
   },
   "repository": {
     "type": "git",
