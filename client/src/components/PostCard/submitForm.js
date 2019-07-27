@@ -68,13 +68,14 @@ class SubmitForm extends React.Component {
 
     handleSubmit = () => {
         const newPost = {
-            userId: this.props.id,
+            userId: this.state.userId,
             title: this.state.title,
             content: this.state.body,
-            location: this.props.location,
-            name: this.props.name,
+            location: this.state.location,
+            name: this.state.name,
             category: this.state.category,
         };
+        console.log(newPost);
 
         fetch("/api/posts", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.

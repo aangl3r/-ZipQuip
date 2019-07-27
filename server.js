@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
 require("./models/User");
+require("./models/Post");
 require("./passport/passport");
 require("./routes/authRoutes")(app);
 
