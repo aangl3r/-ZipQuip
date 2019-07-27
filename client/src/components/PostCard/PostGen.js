@@ -46,7 +46,9 @@ class PostGen extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card className={classes.card} square>
+            <Card 
+            className={classes.card}
+            square>
                 <CardContent>
                 </CardContent>
                 {this.renderCards()}

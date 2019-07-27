@@ -69,6 +69,7 @@ class HomePage extends Component {
                         name: name,
                     });
                     this.updatePosts();
+                    
                 },
                 error => {
                     console.log(error);

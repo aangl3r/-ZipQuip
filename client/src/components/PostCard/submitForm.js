@@ -19,6 +19,7 @@ const styles = theme => ({
 });
 
 class SubmitForm extends React.Component {
+    _isMounted = false;
     state = {
         title: "",
         body: "",
@@ -55,7 +56,7 @@ class SubmitForm extends React.Component {
                 error => {
                     console.log(error);
                 }
-            );
+            )
     };
 
 
@@ -64,6 +65,7 @@ class SubmitForm extends React.Component {
     };
 
     handleSubmit = () => {
+        this._isMounted = true;
         const newPost = {
             userId: this.state.userId,
             title: this.state.title,
@@ -88,7 +90,7 @@ class SubmitForm extends React.Component {
             body: JSON.stringify(newPost), // body data type must match "Content-Type" header
         }).then(
             result => {
-                //this.props.updatePosts();
+                
             },
 
             error => {
@@ -96,6 +98,7 @@ class SubmitForm extends React.Component {
             }
         );
     };
+
 
     render() {
         const { classes } = this.props;
@@ -140,7 +143,7 @@ class SubmitForm extends React.Component {
                         onClick={() => {
                             this.handleSubmit();
                             this.props.closeModal();
-                          }}
+                        }}
                     >
                         Submit
                     </Button>

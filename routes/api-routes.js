@@ -79,7 +79,6 @@ module.exports = app => {
     app.put("/api/users", function (req, res) {
         const userUpdate = {
             name: req.body.name,
-            email: req.body.email,
             zip: req.body.zip,
         };
         if (!req.session.user) {
@@ -88,7 +87,6 @@ module.exports = app => {
         } else {
             if (
                 userUpdate.name === undefined ||
-                userUpdate.email === undefined ||
                 userUpdate.zip === undefined
             ) {
                 console.log("Empty data!");

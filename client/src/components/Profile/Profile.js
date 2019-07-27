@@ -24,7 +24,7 @@ const NameForm = props => {
                 <Input
                     disabled={props.nameDisabled}
                     onChange={props.handleChange}
-                    name="oldName"
+                    name="prevOldName"
                     id="name"
                     autoComplete="name"
                     defaultValue={props.name}
@@ -72,15 +72,17 @@ const ZipForm = props => {
 
 class Profile extends Component {
     state = {
-        oldName: "",
+        notName: "",
         id: "",
         location: "",
-        email: "",
         password: "",
         nameDisabled: true,
         locationDisabled: true,
         passDisabled: true,
-        emailDisabled: true,
+        prevOldName: "",
+        prevLocation: "",
+        prevPass: "",
+        prevEmail: "",
     };
 
     componentDidMount() {
@@ -102,9 +104,9 @@ class Profile extends Component {
                     this.setState({
                         id: result.data.user,
                         prevLocation: result.data.loc,
-                        prevoldName: result.data.name,
-                        email: result.data.email,
+                        prevOldName: result.data.name,
                     });
+                    console.log(this.state)
                 },
                 error => {
                     console.log(error);
@@ -126,18 +128,44 @@ class Profile extends Component {
         console.log(this.state[name + "Disabled"]);
     };
 
+
     updateProfile = event => {
         event.preventDefault();
-        let name = this.state.oldName;
+        let name = this.state.notName;
         if (!name) {
-            name = this.state.prevoldName;
+            name = this.state.prevOldName;
         }
         let location = this.state.location
         if (!location) {
             location = this.state.prevLocation;
         }
         console.log(name)
-        console.log(location)
+        console.log(location)/* 
+        let data = {
+            name: this.state.name,
+            location: this.state.location
+        }
+        fetch("/api/users",
+            {
+                method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, cors, *same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "include", // include, *same-origin, omit
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    // "Content-Type": "application/x-www-form-urlencoded",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrer: "no-referrer", // no-referrer, *client
+                body: JSON.stringify(data)
+            })
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(err => {
+                console.log(err)
+            }) */
     };
 
     render() {
@@ -145,7 +173,7 @@ class Profile extends Component {
             <React.Fragment>
                 <Nav />
                 <ContainerMain>
-                <div style={{ marginTop: "5%" }} />
+                    <div style={{ marginTop: "5%" }} />
                     <Card>
                         <CardContent>
                             <Typography component="h1" variant="h5" align="center">
@@ -155,7 +183,7 @@ class Profile extends Component {
                                 <Grid item xl={10}>
                                     <form className="formGrid" onSubmit={this.updateProfile}>
                                         <NameForm
-                                            name={this.state.prevoldName}
+                                            name={this.state.prevOldName}
                                             nameDisabled={this.state.nameDisabled}
                                             handleClick={this.handleClick}
                                             handleChange={this.handleChange}
@@ -169,14 +197,14 @@ class Profile extends Component {
                                             className="zipInput"
                                         />
                                         <CardActions>
-                                                <Button
-                                                    className="submitButton"
-                                                    type="submit"
-                                                    fullWidth
-                                                    variant="outlined"
-                                                    color="primary"
-                                                >
-                                                    Submit
+                                            <Button
+                                                className="submitButton"
+                                                type="submit"
+                                                fullWidth
+                                                variant="outlined"
+                                                color="primary"
+                                            >
+                                                Submit
                                                 </Button>
                                         </CardActions>
                                     </form>
@@ -185,7 +213,7 @@ class Profile extends Component {
                         </CardContent>
                     </Card>
                 </ContainerMain>
-                
+
             </React.Fragment>
         );
     }
