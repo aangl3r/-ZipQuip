@@ -7,7 +7,7 @@ import Inbox from "../Inbox/Inbox";
 
 const Routes = [
     {
-        path: "/",
+        path: "/Home",
         drawerName: "Home",
         icon: HomeIcon,
         component: HomePage,

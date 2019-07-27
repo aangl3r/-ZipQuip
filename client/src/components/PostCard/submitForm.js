@@ -90,7 +90,7 @@ class SubmitForm extends React.Component {
             body: JSON.stringify(newPost), // body data type must match "Content-Type" header
         }).then(
             result => {
-                this.props.updatePosts();
+                //this.props.updatePosts();
             },
 
             error => {
