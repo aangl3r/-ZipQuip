@@ -134,7 +134,7 @@ module.exports = app => {
                 req.session.loc = userUpdate.zip;
                 req.session.touch();
                 res.sendStatus(200);
-                res.end();
+                //res.end();
                 console.log("The session is now ", req.session)
                 console.log("Session Data: ", req.session.name, req.session.loc)
             }

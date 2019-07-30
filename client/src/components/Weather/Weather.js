@@ -77,7 +77,8 @@ class Weather extends Component {
                     temp: temp,
                     humidity: humidity,
                     wind: wind,
-                    icon: `http://openweathermap.org/img/w/${icon}.png`,
+                    icon: `https://openweathermap.org/img/w/${icon}.png`,
+                    //changing from http to https per console in heroku
                 });
             })
             .catch(error => {

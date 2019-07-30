@@ -148,7 +148,7 @@ class Profile extends Component {
         }
         fetch("/api/users",
             {
-                method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                method: "PUT", // *GET, POST, PUT, DELETE, etc
                 mode: "cors", // no-cors, cors, *same-origin
                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: "include", // include, *same-origin, omit
@@ -166,9 +166,31 @@ class Profile extends Component {
             .catch(err => {
                 console.log(err)
             })
-        
-    };
+            .then(function () {
+                fetch("/api/session",
+                    {
+                        method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                        mode: "cors", // no-cors, cors, *same-origin
+                        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: "include", // include, *same-origin, omit
+                        headers: {
+                            "Content-Type": "application/json",
+                            // "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        redirect: "follow", // manual, *follow, error
+                        referrer: "no-referrer", // no-referrer, *client
+                        body: JSON.stringify(data)
+                    })
+                    .then(function (response) {
+                        console.log(response)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            })
 
+    };
+/* 
     updateSession = event => {
         event.preventDefault();
         let name = this.state.notName;
@@ -187,27 +209,27 @@ class Profile extends Component {
             location: location
         }
         fetch("/api/session",
-        {
-            method: "PUT", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, cors, *same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "include", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // "Content-Type": "application/x-www-form-urlencoded",
-            },
-            redirect: "follow", // manual, *follow, error
-            referrer: "no-referrer", // no-referrer, *client
-            body: JSON.stringify(data)
-        })
-        .then(function (response) {
-            console.log(response)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            {
+                method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, cors, *same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "include", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Content-Type": "application/x-www-form-urlencoded",
+                },
+                redirect: "follow", // manual, *follow, error
+                referrer: "no-referrer", // no-referrer, *client
+                body: JSON.stringify(data)
+            })
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
-
+ */
     render() {
         return (
             <React.Fragment>
@@ -221,7 +243,7 @@ class Profile extends Component {
                             </Typography>
                             <Grid container spacing={8}>
                                 <Grid item xl={10}>
-                                    <form className="formGrid" onSubmit={this.updateProfile} onSubmit={this.updateSession}>
+                                    <form className="formGrid" onSubmit={this.updateProfile}>
                                         <NameForm
                                             name={this.state.prevOldName}
                                             nameDisabled={this.state.nameDisabled}
