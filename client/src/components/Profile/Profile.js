@@ -140,10 +140,11 @@ class Profile extends Component {
             location = this.state.prevLocation;
         }
         console.log(name)
-        console.log(location)/* 
+        console.log(location)
         let data = {
-            name: this.state.name,
-            location: this.state.location
+            userId: this.state.id,
+            name: name,
+            location: location
         }
         fetch("/api/users",
             {
@@ -152,7 +153,6 @@ class Profile extends Component {
                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: "include", // include, *same-origin, omit
                 headers: {
-                    "Accept": "application/json",
                     "Content-Type": "application/json",
                     // "Content-Type": "application/x-www-form-urlencoded",
                 },
@@ -165,7 +165,7 @@ class Profile extends Component {
             })
             .catch(err => {
                 console.log(err)
-            }) */
+            }) 
     };
 
     render() {

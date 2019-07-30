@@ -79,25 +79,29 @@ module.exports = app => {
     app.put("/api/users", function (req, res) {
         const userUpdate = {
             name: req.body.name,
-            zip: req.body.zip,
+            zip: req.body.location,
         };
         if (!req.session.user) {
             res.sendStatus(401);
             return;
         } else {
             if (
+                
                 userUpdate.name === undefined ||
                 userUpdate.zip === undefined
             ) {
+                console.log(req.body)
                 console.log("Empty data!");
                 res.sendStatus(401);
-            }
+            } else
+            console.log("Hello world")
             User.update({ _id: req.body.userId }, userUpdate, function (err, user) {
                 if (err) {
                     console.log(err);
                     res.sendStatus(500);
                 } else {
-                    console.log(user);
+                    
+                    console.log("This is the User: ", user);
                     res.sendStatus(200);
                 }
             });

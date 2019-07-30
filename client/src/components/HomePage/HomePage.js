@@ -77,6 +77,10 @@ class HomePage extends Component {
             );
     }
 
+/*     componentDidUpdate = () => {
+        this.updatePosts();
+    }
+ */
     updatePosts = () => {
         fetch(`/api/posts/50/${this.state.location}`, {
             method: "Get", // *GET, POST, PUT, DELETE, etc.
@@ -113,7 +117,8 @@ class HomePage extends Component {
                     <ContainerMain>
                         <Grid container spacing={4}>
                             <Grid item xs={12}>
-                                <PostCard>
+                                <PostCard
+                                updatePosts={this.updatePosts}>
                                 </PostCard>
                             </Grid>
                             <Grid item xs={4}>
