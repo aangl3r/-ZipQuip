@@ -165,8 +165,48 @@ class Profile extends Component {
             })
             .catch(err => {
                 console.log(err)
-            }) 
+            })
+        
     };
+
+    updateSession = event => {
+        event.preventDefault();
+        let name = this.state.notName;
+        if (!name) {
+            name = this.state.prevOldName;
+        }
+        let location = this.state.location
+        if (!location) {
+            location = this.state.prevLocation;
+        }
+        console.log(name)
+        console.log(location)
+        let data = {
+            userId: this.state.id,
+            name: name,
+            location: location
+        }
+        fetch("/api/session",
+        {
+            method: "PUT", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(data)
+        })
+        .then(function (response) {
+            console.log(response)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 
     render() {
         return (
@@ -181,7 +221,7 @@ class Profile extends Component {
                             </Typography>
                             <Grid container spacing={8}>
                                 <Grid item xl={10}>
-                                    <form className="formGrid" onSubmit={this.updateProfile}>
+                                    <form className="formGrid" onSubmit={this.updateProfile} onSubmit={this.updateSession}>
                                         <NameForm
                                             name={this.state.prevOldName}
                                             nameDisabled={this.state.nameDisabled}

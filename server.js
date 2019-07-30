@@ -64,6 +64,9 @@ app.use(
     secret: sessionKey,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: { maxAge: hour, sameSite: true },
+    rolling: true,
+    resave: true,
+    saveUninitialized: false
   })
 );
 

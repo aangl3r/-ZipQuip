@@ -77,10 +77,7 @@ class HomePage extends Component {
             );
     }
 
-/*     componentDidUpdate = () => {
-        this.updatePosts();
-    }
- */
+
     updatePosts = () => {
         fetch(`/api/posts/50/${this.state.location}`, {
             method: "Get", // *GET, POST, PUT, DELETE, etc.

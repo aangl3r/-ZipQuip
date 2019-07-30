@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Post = require("../models/Post");
 const bcrypt = require("bcrypt");
+const passport = require("passport")
 
 module.exports = app => {
     //checks if user exists. if not, adds to db
@@ -86,7 +87,7 @@ module.exports = app => {
             return;
         } else {
             if (
-                
+
                 userUpdate.name === undefined ||
                 userUpdate.zip === undefined
             ) {
@@ -94,18 +95,52 @@ module.exports = app => {
                 console.log("Empty data!");
                 res.sendStatus(401);
             } else
-            console.log("Hello world")
+                console.log("Hello world")
             User.update({ _id: req.body.userId }, userUpdate, function (err, user) {
                 if (err) {
                     console.log(err);
                     res.sendStatus(500);
                 } else {
-                    
+
                     console.log("This is the User: ", user);
                     res.sendStatus(200);
                 }
             });
         }
+
+    });
+    app.put("/api/session", function (req, res) {
+        const userUpdate = {
+            name: req.body.name,
+            zip: req.body.location,
+        };
+        if (!req.session.user) {
+            res.sendStatus(401);
+            return;
+        } else {
+            if (
+
+                userUpdate.name === undefined ||
+                userUpdate.zip === undefined
+            ) {
+                console.log(req.body)
+                console.log("Empty data!");
+                res.sendStatus(401);
+            } else {
+                console.log("Hello world")
+                console.log(req.session)
+                _id = req.body.userId
+                req.session.name = userUpdate.name;
+                req.session.loc = userUpdate.zip;
+                req.session.touch();
+                res.sendStatus(200);
+                res.end();
+                console.log("The session is now ", req.session)
+                console.log("Session Data: ", req.session.name, req.session.loc)
+            }
+        };
+
+
     });
     //update user pw
     app.put("/api/users/password", function (req, res) {
