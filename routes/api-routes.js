@@ -242,4 +242,67 @@ module.exports = app => {
             });
         }
     });
+    //returns messages received by id
+    app.get("/api/messages/inbox/:id", function (req, res) {
+        const user = req.params.id;
+        const find = Message.find({ recipientId: user }).sort({ createdAt: -1 });
+        find.exec(function (err, messages) {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                console.log("Received request for inbox.");
+                console.log(messages);
+                res.send(JSON.stringify(messages));
+            }
+        });
+    });
+    //makes a new message
+  app.post("/api/messages", function(req, res) {
+    const newMessage = {
+      senderId: req.body.senderId,
+      senderName: req.body.senderName,
+      recipientId: req.body.recipientId,
+      recipientName: req.body.recipientName,
+      subject: req.body.subject,
+      content: req.body.content,
+    };
+    console.log(newMessage);
+    Message.create(newMessage, function(err, post) {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        const messageId = post._id;
+        User.findOneAndUpdate(
+          {
+            _id: newMessage.senderId,
+          },
+          { $push: { messages: messageId } },
+          function(err) {
+            if (err) {
+              res.sendStatus(500);
+              console.log(err);
+            } else {
+              User.findOneAndUpdate(
+                {
+                  _id: newMessage.recipientId,
+                },
+                { $push: { messages: messageId } },
+                function(err) {
+                  if (err) {
+                    res.sendStatus(500);
+                    console.log(err);
+                  } else {
+                    console.log("Message successfully added!");
+                    res.sendStatus(200);
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  });
 }
