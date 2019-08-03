@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Message = require("../models/Message")
 const bcrypt = require("bcrypt");
 const passport = require("passport")
 

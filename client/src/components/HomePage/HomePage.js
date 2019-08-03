@@ -163,7 +163,7 @@ class HomePage extends Component {
         }).then(
             result => {
                 if (result.ok) {
-                    this.openMessageConfirm();
+                    this.openSnackBar();
                 }
             },
             error => {
@@ -186,17 +186,17 @@ class HomePage extends Component {
         });
     };
 
-    openMessageConfirm = () => {
+    openSnackBar = () => {
         this.setState({ snackBar: true });
-    };
-
-    closeMessageConfirm = (event, reason) => {
+      };
+    
+      closeSnackBar = (event, reason) => {
         if (reason === "clickaway") {
-            return;
+          return;
         }
-
+    
         this.setState({ snackBar: false });
-    };
+      };
 
     render() {
         const { classes } = this.props;
