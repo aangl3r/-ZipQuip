@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import PostComment from "./PostComment"
+import PostComment from "../PostCard/PostComment"
 
 const styles = {
     card: {
@@ -27,7 +27,7 @@ class PostGen extends Component {
     renderCards = () => {
         const posts = this.props.posts;
         return posts
-            .slice(0, 4)
+            .slice(0, 50)
             .map((post, index) => {
                 return (
                     <PostComment

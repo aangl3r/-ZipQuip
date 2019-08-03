@@ -9,6 +9,7 @@ import Profile from "./components/Profile/Profile";
 import ErrorPush from "./components/ErrorPush/ErrorPush";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Inbox from "./components/Inbox/Inbox";
+import View from "./components/CommentPage/View"
 
 class App extends Component {
   state = {
@@ -65,6 +66,7 @@ class App extends Component {
                   <Route exact path="/Home" component={HomePage} />
                   <Route exact path="/profile" component={Profile} />
                   <Route exact path="/inbox" component={Inbox} />
+                  <Route exact path="/view" component={View} />
                   <Route component={ErrorPush} />
                 </Switch>
               </div>
