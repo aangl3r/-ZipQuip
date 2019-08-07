@@ -35,6 +35,9 @@ const styles = theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(4),
         outline: "none",
+    },
+    buttonStyle: {
+        marginTop: "10px"
     }
 });
 
@@ -226,33 +229,39 @@ class View extends Component {
                             margin="normal"
                             variant="outlined"
                         />
-                        <TextField
-                            id="standard-multiline-flexible"
-                            multiline
-                            rowsMax="6"
-                            label="Message"
-                            className={classes.textField}
-                            name="replyContent"
-                            value={this.state.replyContent}
-                            onChange={this.handleInputChange}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <Button
-                            variant="outlined"
-                            color="secondary"
-                            onClick={this.handleClose}
-                        >
-                            Cancel
-                                    </Button>
+                        <div>
+                            <TextField
+                                id="standard-multiline-flexible"
+                                multiline
+                                rowsMax="6"
+                                label="Message"
+                                className={classes.textField}
+                                name="replyContent"
+                                value={this.state.replyContent}
+                                onChange={this.handleInputChange}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                        </div>
+                        <div className={classes.buttonStyle}>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                onClick={this.sendMessage}
+                            >
+                                Send
+                    </Button>
+                        </div>
+                        <div className={classes.buttonStyle}>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={this.handleClose}
+                            >
+                                Cancel
+                        </Button>
+                        </div>
 
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={this.sendMessage}
-                        >
-                            Send
-                                    </Button>
                     </div>
                 </Modal>
                 <MessageConfirm

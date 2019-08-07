@@ -51,6 +51,9 @@ const styles = theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(4),
         outline: "none",
+    },
+    buttonStyle: {
+        marginTop: "10px"
     }
 });
 
@@ -188,15 +191,15 @@ class HomePage extends Component {
 
     openSnackBar = () => {
         this.setState({ snackBar: true });
-      };
-    
-      closeSnackBar = (event, reason) => {
+    };
+
+    closeSnackBar = (event, reason) => {
         if (reason === "clickaway") {
-          return;
+            return;
         }
-    
+
         this.setState({ snackBar: false });
-      };
+    };
 
     render() {
         const { classes } = this.props;
@@ -261,6 +264,7 @@ class HomePage extends Component {
                                     margin="normal"
                                     variant="outlined"
                                 />
+                                <div>
                                 <TextField
                                     id="standard-multiline-flexible"
                                     multiline
@@ -273,21 +277,26 @@ class HomePage extends Component {
                                     margin="normal"
                                     variant="outlined"
                                 />
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    onClick={this.handleClose}
-                                >
-                                    Cancel
+                                </div>
+                                <div className={classes.buttonStyle}>
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        onClick={this.sendMessage}
+                                    >
+                                        Send
+                                </Button>
+                                </div>
+                                <div className={classes.buttonStyle}>
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        onClick={this.handleClose}
+                                    >
+                                        Cancel
                                     </Button>
+                                </div>
 
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    onClick={this.sendMessage}
-                                >
-                                    Send
-                                    </Button>
                             </div>
                         </Modal>
                         <MessageConfirm

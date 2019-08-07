@@ -15,6 +15,9 @@ const styles = theme => ({
     },
     dense: {
         marginTop: 19,
+    },
+    buttonStyle: {
+        margin: "10px"
     }
 });
 
@@ -130,25 +133,29 @@ class SubmitForm extends React.Component {
                     />
                 </form>
                 <label htmlFor="contained-button-file">
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={this.props.closeModal}
-                    >
-                        Cancel
-                        </Button>
-                    <Button
-                        color="primary"
-                        variant="outlined"
-                        component="span"
-                        className={classes.button}
-                        onClick={() => {
-                            this.handleSubmit();
-                            this.props.closeModal();
-                        }}
-                    >
-                        Submit
+                    <div className={classes.buttonStyle}>
+                        <Button
+                            color="primary"
+                            variant="outlined"
+                            component="span"
+                            className={classes.button}
+                            onClick={() => {
+                                this.handleSubmit();
+                                this.props.closeModal();
+                            }}
+                        >
+                            Submit
                     </Button>
+                    </div>
+                    <div className={classes.buttonStyle}>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={this.props.closeModal}
+                        >
+                            Cancel
+                        </Button>
+                    </div>
                 </label>
             </div>
         )
