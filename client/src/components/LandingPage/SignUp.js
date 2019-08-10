@@ -98,7 +98,7 @@ class SignUp extends React.Component {
       >
         <div style={getModalStyle()} className={classes.paper}>
           <Typography component="h1" variant="h5" align="center">
-            Create an account with Neighborly
+            Create an account with ZipQuip
           </Typography>
           <form className={classes.form} onSubmit={this.saveUser}>
             <FormControl margin="normal" required fullWidth>
